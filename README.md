@@ -1,10 +1,39 @@
 # Run a node and (optionally) stake ETH using Prysm
 
 ## Environment preprocessing
+## Install Lighthouse using Homebrew
 
-## 1. Install Homebrew
-    - .devcontainer/docker 
-    - .devcontainer/devcontainer.json
+- inside the .devcontainer/devcontainer.json
+```
+"features": {
+    "homebrew": {
+                "packages": [
+                    "lighthouse"
+                    ]
+                }
+            }
+```
+
+## 2. Run the Node 
+
+### Step 1. Create a JWT secret file
+A JWT secret file is used to secure the communication between the execution client and the consensus client. In this step, we will create a JWT secret file which will be used in later steps.
+
+```
+sudo mkdir -p /secrets
+openssl rand -hex 32 | tr -d "\n" | sudo tee /secrets/jwt.hex
+```
+> b39447977ae43b01aa927e9c1b09cb8429bc2691f81c23439806f31e3408b965
+
+
+### Step 2: Set up an execution node
+The Lighthouse beacon node must connect to an execution engine in order to validate the transactions present in blocks. The execution engine connection must be exclusive, i.e. you must have one execution node per beacon node. The reason for this is that the beacon node controls the execution node. Select an execution client from the list below and run it:
+
+
+
+
+
+
 
 ## 2. Install Prysm
 
