@@ -140,140 +140,43 @@ Once this is finished, the Smartnode stack will be ready to run.
 
 ## 2. Configuring the Smartnode Stack
 
+```
+rocketpool service config
+```
+You can follow the setup step from [here](https://docs.rocketpool.net/guides/node/config/overview.html)
 
-
-
-
-
-
-
-
-
-
-
-
-## 1. Install Lighthouse using Homebrew
+note, it's better to have the checkpoints setting in the Consensus Client (ETH2). You need to input the Checkpoint Sync URL, you can google it, or you can use mine as well, this setting will make the sync faster: 
 
 ```
-brew install lighthouse
+https://goerli.beaconstate.info/  
 ```
 
-## 2. Run the Node 
-
-### Step 1. Create a JWT secret file
-A JWT secret file is used to secure the communication between the execution client and the consensus client. In this step, we will create a JWT secret file which will be used in later steps.
-
+## 3. Start the Rocket pool 
 ```
-sudo mkdir -p /secrets
-openssl rand -hex 32 | tr -d "\n" | sudo tee /secrets/jwt.hex
+$ rocketpool service start
+
+Your Smartnode is currently using the Prater Test Network.
+
+Your eth2 client is on the correct network.
+
+Your primary execution client is fully synced.
+You do not have a fallback execution client enabled.
+Your consensus client is still syncing (99.69%).
 ```
 
 
-### Step 2: Set up an execution node
-The Lighthouse beacon node must connect to an execution engine in order to validate the transactions present in blocks. The execution engine connection must be exclusive, i.e. you must have one execution node per beacon node. The reason for this is that the beacon node controls the execution node. In here we select Geth as out execution client. 
-
-#### install the Geth node
-```
-brew tap ethereum/ethereum && brew install ethereum
-```
-
-then start Geth so that it can connect to a consensus client looks as follows:
-```
-geth \
---authrpc.addr localhost \
---authrpc.port 8551 \
---authrpc.vhosts localhost \
---authrpc.jwtsecret /tmp/jwtsecret
-```
-
-### Setp 3: Set up a beacon node using Lighthouse
+## 4. Create a new wallet 
 
 ```
-lighthouse bn \
-  --network goerli \
-  --execution-endpoint http://localhost:8551 \
-  --execution-jwt /secrets/jwt.hex \
-  --checkpoint-sync-url https://mainnet.checkpoint.sigp.io \
-  --http
+rocketpool wallet init
 ```
-> Note: If you download the binary file, you need to navigate to the directory of the binary file to run the above command.
+You will first be prompted for a password to protect your wallet's private key. Next, you will be presented the unique 24-word mnemonic for your new wallet. This is the recovery phrase for your wallet.
 
-Notable flags:
+
+## 5. Preparing your Node for Operation
+
+Now you've successfully started the Smartnode services, created a wallet, and finished syncing both the Execution (ETH1) and Consensus (ETH2) chains on your respective clients. If so, then you are ready to register your node on the Rocket Pool network and create a minipool with an ETH2 validator
 
 ```
-Notable flags:
-
---network flag, which selects a network:
-    lighthouse (no flag): Mainnet.
-
-    lighthouse --network mainnet: Mainnet.
-
-    lighthouse --network goerli: Goerli (testnet).
-
-    lighthouse --network sepolia: Sepolia (testnet).
-
-    lighthouse --network chiado: Chiado (testnet).
-
-    lighthouse --network gnosis: Gnosis chain.
+rocketpool node register
 ```
-
-
-
-
-
-
-
-
-## 2. Install Prysm
-
-Create a folder called **ethereum** on your SSD, and then two subfolders within it: **consensus** and **execution**:
-```
-- ethereum
-    - consensus
-    - execution
-```
-### Download the Prysm client and make it executable
-```
-cd consensus
-```
-```
-mkdir prysm && cd prysm
-curl https://raw.githubusercontent.com/prysmaticlabs/prysm/master/prysm.sh --output prysm.sh && chmod +x prysm.sh
-```
-
-
-### Generate JWT Secret
-
-The HTTP connection between your beacon node and execution node needs to be authenticated using a JWT token. 
-
-```
-openssl rand -hex 32 | tr -d "\n" > "jwt.hex"
-```
-Prysm will output a jwt.hex file path.
-
-
-## 3. Run an execution client
-
-install an execution-layer client that Prysm's beacon node will connect to.
-
-### Geth installer
-
-```
-brew tap ethereum/ethereum
-brew install ethereum
-```
-
-```
-cd execution
-geth --goerli --http --http.api eth,net,engine,admin --authrpc.jwtsecret /path/to/jwt.hex 
-```
-
-
-## 4. Run a beacon node using Prysm
-Download the [Prater genesis state](https://github.com/eth-clients/eth2-networks/raw/master/shared/prater/genesis.ssz) from Github into your consensus/prysm directory. Then use the following command to start a beacon node that connects to your local execution node:
-
-```
-./prysm.sh beacon-chain --execution-endpoint=http://localhost:8551 --prater --jwt-secret=path/to/jwt.hex --genesis-state=genesis.ssz --suggested-fee-recipient=0x01234567722E6b0000012BFEBf6177F1D2e9758D9
-```
-
-make change on --suggested-fee-recipient and path/to/jwt.hex
