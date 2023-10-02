@@ -163,6 +163,8 @@ Your primary execution client is fully synced.
 You do not have a fallback execution client enabled.
 Your consensus client is still syncing (99.69%).
 ```
+once it's complete snyc, it will look something like below:
+<img width="1021" alt="Screenshot 2023-10-02 at 11 09 05 AM" src="https://github.com/nogibjj/goerli_scott/assets/43226003/670fddea-f4f8-46d2-9488-a11561c5cd1b">
 
 
 ## 4. Create a new wallet 
@@ -180,3 +182,19 @@ Now you've successfully started the Smartnode services, created a wallet, and fi
 ```
 rocketpool node register
 ```
+once it finished registering, it will show as below:
+<img width="642" alt="Screenshot 2023-10-02 at 11 15 48 AM" src="https://github.com/nogibjj/goerli_scott/assets/43226003/31637b29-f43c-4a76-a552-aafa860c7324">
+
+## 6. Preparing your Node for Operation
+Once you have your wallet address, you can now transfer funds into it from your wallet. Here I was using my MetaMask wallet to make the transfer:
+<img width="354" alt="Screenshot 2023-10-02 at 11 04 29 AM" src="https://github.com/nogibjj/goerli_scott/assets/43226003/97ef56c4-9e8b-4c1d-aec3-2fdea1f3773c">
+<img width="343" alt="Screenshot 2023-10-02 at 11 07 08 AM" src="https://github.com/nogibjj/goerli_scott/assets/43226003/58ed4412-faef-4e4c-8bd2-c7ea68ded143">
+
+once the transfer is done, you can go the the [Rocket wallet](https://testnet.rocketpool.net/withdrawal-address) to check your fund:
+<img width="382" alt="Screenshot 2023-10-02 at 11 14 50 AM" src="https://github.com/nogibjj/goerli_scott/assets/43226003/d5e7aa13-7de3-4bb4-832b-8b8b6583a843">
+
+
+
+
+
+
