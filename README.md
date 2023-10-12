@@ -161,10 +161,13 @@ Your eth2 client is on the correct network.
 
 Your primary execution client is fully synced.
 You do not have a fallback execution client enabled.
-Your consensus client is still syncing (99.69%).
+Your consensus client is is fully synced.
 ```
-once it's complete snyc, it will look something like below:
-<img width="1021" alt="Screenshot 2023-10-02 at 11 09 05 AM" src="https://github.com/nogibjj/goerli_scott/assets/43226003/670fddea-f4f8-46d2-9488-a11561c5cd1b">
+
+the consensus client will take a while for sync, please be patient. 
+
+>note the rocket pool need more peer to run, so you might need to add peers to your SSD to make it run. (codespace won't work in this step, please using VM from AWS or Azure)
+
 
 
 ## 4. Create a new wallet 
@@ -175,26 +178,135 @@ rocketpool wallet init
 You will first be prompted for a password to protect your wallet's private key. Next, you will be presented the unique 24-word mnemonic for your new wallet. This is the recovery phrase for your wallet.
 
 
+
+
+
 ## 5. Preparing your Node for Operation
+Once you have your wallet address, you can now transfer funds into it from your wallet. Here I was using my MetaMask wallet to make the transfer:
+<br>
+<img width="354" alt="Screenshot 2023-10-02 at 11 04 29 AM" src="https://github.com/nogibjj/goerli_scott/assets/43226003/97ef56c4-9e8b-4c1d-aec3-2fdea1f3773c"> 
+
+<br>
+<img width="343" alt="Screenshot 2023-10-02 at 11 07 08 AM" src="https://github.com/nogibjj/goerli_scott/assets/43226003/58ed4412-faef-4e4c-8bd2-c7ea68ded143">
+
+<br>
+
+once the transfer is done, you can go the the [Rocket wallet](https://testnet.rocketpool.net/withdrawal-address) to check your fund:
+
+<br>
+<img width="382" alt="Screenshot 2023-10-02 at 11 14 50 AM" src="https://github.com/nogibjj/goerli_scott/assets/43226003/d5e7aa13-7de3-4bb4-832b-8b8b6583a843">
+
+
 
 Now you've successfully started the Smartnode services, created a wallet, and finished syncing both the Execution (ETH1) and Consensus (ETH2) chains on your respective clients. If so, then you are ready to register your node on the Rocket Pool network and create a minipool with an ETH2 validator
 
 ```
 rocketpool node register
 ```
-once it finished registering, it will show as below:
-<img width="642" alt="Screenshot 2023-10-02 at 11 15 48 AM" src="https://github.com/nogibjj/goerli_scott/assets/43226003/31637b29-f43c-4a76-a552-aafa860c7324">
-
-## 6. Preparing your Node for Operation
-Once you have your wallet address, you can now transfer funds into it from your wallet. Here I was using my MetaMask wallet to make the transfer:
-<img width="354" alt="Screenshot 2023-10-02 at 11 04 29 AM" src="https://github.com/nogibjj/goerli_scott/assets/43226003/97ef56c4-9e8b-4c1d-aec3-2fdea1f3773c">
-<img width="343" alt="Screenshot 2023-10-02 at 11 07 08 AM" src="https://github.com/nogibjj/goerli_scott/assets/43226003/58ed4412-faef-4e4c-8bd2-c7ea68ded143">
-
-once the transfer is done, you can go the the [Rocket wallet](https://testnet.rocketpool.net/withdrawal-address) to check your fund:
-<img width="382" alt="Screenshot 2023-10-02 at 11 14 50 AM" src="https://github.com/nogibjj/goerli_scott/assets/43226003/d5e7aa13-7de3-4bb4-832b-8b8b6583a843">
+once it finished registering, you can process to the withdrawal address setting
 
 
+check status by 
+```
+rocketpool --allow-root node status 
+```
+it will show something like below 
+![status](pic/rocketpool_status.png)
 
 
+## 6. Setting your Withdrawal Address
+
+### step 1: run
+```
+rocketpool node set-withdrawal-address <your cold wallet address or ENS name>
+```
+Your new withdrawal address will be marked as "pending". Until you confirm it, your old withdrawal address will still be used.
 
 
+### step 2: Confirm withdrawal address
+To confirm it, you must send a special transaction from your new withdrawal address to the minipool contract to verify that you own the withdrawal address.
+The easiest way to do this is to navigate to the Rocket Pool withdrawal address site (for the Prater Testnet or for Mainnet).
+
+
+### step 3: Confirm to enable the Rocket Pool website to use your wallet
+If you haven't already connected Metamask or WalletConnect to the Rocket Pool website, do this now. Click the select wallet button in the center of the screen, and choose MetaMask or WalletConnect based on which wallet you would like to use. You will then be prompted asking you to confirm the connection.
+
+### step 4: confirm the node withdrawal address
+<br>
+
+![](pic/node-address.png)
+<br>
+Type your node wallet address here and click on the Check Mark button to continue.
+
+1. You will be prompted with a question asking if you want to set a new node withdrawal address or confirm a pending one. Select Confirm.
+2. Now, there should be a new confirmation dialog in your wallet. Again, using MetaMask as an example, click the MetaMask icon to open it and you should see something like this:
+<br>
+![](pic/confirm-address.png)
+<br>
+Click Confirm to send the transaction to the network. This will take some time until it gets mined, but once it does, you will see a confirmation dialog:
+<br>
+![](pic/confirmed.png)
+<br>
+
+
+## 7. Creating Minipools (Validator)
+
+Before creating a minipool, the first step is to choose the amount of ETH you want to bond. in here we choice to bond 8 ETH. 
+
+
+### Staking via the Website
+In order to stake on behalf of your node an address must be whitelisted. You can do this via the following Smartnode command:
+
+
+```
+rocketpool node add-address-to-stake-rpl-whitelist address-or-ens
+```
+
+### staking via the Node CLI 
+```
+rocketpool node stake-rpl
+```
+
+here's the output
+
+```
+Please choose an amount of RPL to stake:
+1: The minimum minipool stake amount for an 8-ETH minipool (100.794306 RPL)?
+2: The maximum minipool stake amount for an 8-ETH minipool (503.971527 RPL)?
+3: The minimum minipool stake amount for a 16-ETH minipool (67.196204 RPL)?
+4: The maximum minipool stake amount for a 16-ETH minipool (1007.943054 RPL)?
+5: Your entire RPL balance (3357.982300 RPL)?
+6: A custom amount
+```
+
+Select how much you'd like to stake, then confirm the operation.
+
+Once you finished you can check the status again 
+
+```
+rocketpool node status
+```
+you will have output as:
+
+```
+The node has a total stake of 3357.982300 RPL and an effective stake of 3257.13874 RPL.
+This is currently 26.32% of its borrowed ETH and 92.39% of its bonded ETH.
+It must keep at least 100.794305 RPL staked to claim RPL rewards (10% of borrowed ETH).
+It can earn rewards on up to 503.971526 RPL (150% of bonded ETH).
+The node has enough RPL staked to make 1 more 8-ETH minipools (or 2 more 16-ETH minipools).
+```
+This will show you how many minipools you can make of each bond size based on your RPL collateral.
+
+### 8. Depositing ETH and Creating a Minipool
+```
+rocketpool node deposit
+```
+
+you can choice either 8 Eth or 16 Eth to deposit. 
+
+you can check the status in https://goerli.beaconcha.in/
+
+it will take 2 days for receive the transfer.
+after you done, it should be something like this below:
+
+![](pic/Check.png)
