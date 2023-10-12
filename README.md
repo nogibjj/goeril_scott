@@ -241,11 +241,15 @@ Type your node wallet address here and click on the Check Mark button to continu
 1. You will be prompted with a question asking if you want to set a new node withdrawal address or confirm a pending one. Select Confirm.
 2. Now, there should be a new confirmation dialog in your wallet. Again, using MetaMask as an example, click the MetaMask icon to open it and you should see something like this:
 <br>
+
 ![ca](pic/confirm-address.png)
+
 <br>
 Click Confirm to send the transaction to the network. This will take some time until it gets mined, but once it does, you will see a confirmation dialog:
 <br>
+
 ![confirmed](pic/confirmed.png)
+
 <br>
 
 
