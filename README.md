@@ -310,6 +310,11 @@ you can choice either 8 Eth or 16 Eth to deposit.
 
 you can check the status in https://goerli.beaconcha.in/
 
+also you can check your dashboard for the validators status.
+![screenshort102714](https://github.com/nogibjj/goerli_scott/assets/43226003/1234f508-a4ff-4510-a32a-5758c8984111)
+![screenshot11061458](https://github.com/nogibjj/goerli_scott/assets/43226003/c39bdfe5-406e-4933-b8f2-1be9de24d0c0)
+![screenshot11161545](https://github.com/nogibjj/goerli_scott/assets/43226003/8b7b2593-5c6c-4afb-b4a5-19caf14834b2)
+
 it will take 2 days for receive the transfer.
 after you done, it should be something like this below:
 
