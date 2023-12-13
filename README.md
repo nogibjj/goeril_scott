@@ -312,8 +312,9 @@ you can check the status in https://goerli.beaconcha.in/
 
 also you can check your dashboard for the validators status.
 ![screenshot10061434](https://github.com/nogibjj/goerli_scott/assets/43226003/1234f508-a4ff-4510-a32a-5758c8984111)
-![screenshot11061458](https://github.com/nogibjj/goerli_scott/assets/43226003/c39bdfe5-406e-4933-b8f2-1be9de24d0c0)
-![Screenshot11061502](https://github.com/nogibjj/goerli_scott/assets/43226003/05f2598f-47d9-4a2d-90ab-2a45d26382c9)
+![screenshot11061455](https://github.com/nogibjj/goerli_scott/assets/43226003/9992a723-db44-49a7-abdc-f4c2a752c3e5)
+![screenshot11061458](https://github.com/nogibjj/goerli_scott/assets/43226003/0999be3d-c88b-418d-bdcd-0ad300c27f4a)
+![screenshot11061502](https://github.com/nogibjj/goerli_scott/assets/43226003/05f2598f-47d9-4a2d-90ab-2a45d26382c9)
 
 it will take 2 days for receive the transfer.
 after you done, it should be something like this below:
